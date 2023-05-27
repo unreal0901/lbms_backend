@@ -99,10 +99,7 @@ module.exports.loginHandler = async (req, res, next) => {
     res.cookie("access_token", access_token, accessTokenCookieOptions);
     res.cookie("refresh_token", refresh_token, refreshTokenCookieOptions);
     res.cookie("logged_in", true, {
-      expires: new Date(
-        Date.now() + config.get("accessTokenExpiresIn") * 60 * 1000
-      ),
-      maxAge: config.get("accessTokenExpiresIn") * 60 * 1000,
+      ...accessTokenCookieOptions,
       httpOnly: false,
     });
 
