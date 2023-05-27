@@ -20,7 +20,7 @@ const accessTokenCookieOptions = {
   ),
   maxAge: config.get("accessTokenExpiresIn") * 60 * 1000,
   httpOnly: true,
-  sameSite: "lax",
+  sameSite: "none",
 };
 
 const refreshTokenCookieOptions = {
@@ -29,12 +29,14 @@ const refreshTokenCookieOptions = {
   ),
   maxAge: config.get("refreshTokenExpiresIn") * 60 * 1000,
   httpOnly: true,
-  sameSite: "lax",
+  sameSite: "none",
 };
 
 // Only set secure to true in production
-if (process.env.NODE_ENV === "production")
+if (process.env.NODE_ENV === "production") {
   accessTokenCookieOptions.secure = true;
+  refreshTokenCookieOptions.secure = true;
+}
 
 module.exports.registerHandler = async (req, res, next) => {
   try {
