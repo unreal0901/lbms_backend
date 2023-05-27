@@ -19,8 +19,10 @@ app.use(express.json({ limit: "10kb" }));
 // 2. Cookie parser
 app.use(cookieParser());
 
+const allowedOrigins = [config.get("origin"), "http://localhost:3000"];
+
 // 3.Cors
-app.use(cors({ origin: config.get("origin"), credentials: true }));
+app.use(cors({ origin: allowedOrigins, credentials: true }));
 
 //4. logger
 if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
