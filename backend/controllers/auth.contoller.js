@@ -101,7 +101,6 @@ module.exports.loginHandler = async (req, res, next) => {
     res.cookie("logged_in", true, {
       ...accessTokenCookieOptions,
       httpOnly: false,
-      secure: false,
     });
 
     // Send Access Token
