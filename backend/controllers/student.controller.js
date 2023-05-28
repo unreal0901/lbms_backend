@@ -50,7 +50,6 @@ module.exports.getStudentBooksHandler = async (req, res, next) => {
   try {
     const user = res.locals.user;
     const studentBooks = await getStudentBooks(user);
-    console.log(studentBooks);
     res
       .status(200)
       .json({ message: "All Student Books fetched", data: studentBooks });

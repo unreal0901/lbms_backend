@@ -7,7 +7,6 @@ const {
 
 module.exports.createBookHandler = async (req, res, next) => {
   try {
-    // console.log("inside controller");
     const book = await createBook(
       {
         title: req.body.title,

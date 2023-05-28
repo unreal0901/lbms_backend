@@ -12,7 +12,6 @@ const createUser = async (input) => {
   return studentModel.create(input);
 };
 
-console.log(excludedFields);
 
 // Find User by Id
 const findUserById = async (id) => {
@@ -36,8 +35,6 @@ const findAndUpdateUser = async (query, update, options) => {
 
 // Sign Token
 const signToken = async (user) => {
-  console.log("Inside sign token");
-  console.log(user);
   // Sign the access token
   const access_token = signJwt({ sub: user._id }, "accessTokenPrivateKey", {
     expiresIn: `${config.get("accessTokenExpiresIn")}m`,
@@ -47,7 +44,6 @@ const signToken = async (user) => {
     expiresIn: `${config.get("refreshTokenExpiresIn")}m`,
   });
 
-  console.log(access_token, refresh_token);
   // Create a Session
   redisClient.set(user._id.toString(), JSON.stringify(user), {
     EX: 60 * 60,

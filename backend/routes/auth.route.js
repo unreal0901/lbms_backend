@@ -11,6 +11,7 @@ const {
   createStudentSchema,
   loginStudentSchema,
 } = require("../schema/student.schema");
+const { restrictTo } = require("../middleware/restrictTo");
 
 const router = express.Router();
 
@@ -21,10 +22,15 @@ const router = express.Router();
 // Login user route
 router.post("/login", validate(loginStudentSchema), loginHandler);
 
-// Add student or admin
-router.post("/register", validate(createStudentSchema), registerHandler);
 // This is deserialze middleware it checks for user have valid session and have appropriate tokens.
 router.use(deserializeUser, requireUser);
+// Add student or admin
+router.post(
+  "/register",
+  restrictTo("admin"),
+  validate(createStudentSchema),
+  registerHandler
+);
 
 // Logout User
 router.get("/logout", logoutHandler);
