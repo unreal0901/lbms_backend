@@ -33,7 +33,7 @@ const refreshTokenCookieOptions = {
 };
 
 // Only set secure to true in production
-if (process.env.NODE_ENV === "production") {
+if (config.get("deployStage") === "production") {
   accessTokenCookieOptions.secure = true;
   refreshTokenCookieOptions.secure = true;
 }

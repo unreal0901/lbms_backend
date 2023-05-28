@@ -1,5 +1,5 @@
 {
-  "env": "NODE_ENV",
+  "deployStage": "DEPLOY_STAGE",
   "dbName": "MONGODB_USERNAME",
   "dbPass": "MONGODB_PASSWORD",
   "redisName": "REDIS_USERNAME",
