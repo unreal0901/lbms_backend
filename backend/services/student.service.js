@@ -31,7 +31,6 @@ const issueBook = async (user, bookToIssue) => {
       throw new AppError("Student not found", 404);
     }
 
-    console.log(student);
     const newIssuedBook = { book: bookToIssue.id };
 
     const isBookAlreadyIssued = student.issuedBooks.some((issuedBook) => {
@@ -47,7 +46,6 @@ const issueBook = async (user, bookToIssue) => {
     const bookInventory = await BookInventory.findOne({
       isbn: bookToIssue.isbn,
     });
-    console.log(bookInventory);
     if (bookInventory) {
       bookInventory.numBooksAvailable -= 1;
 
