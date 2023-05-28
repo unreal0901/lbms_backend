@@ -5,13 +5,13 @@ const studentModel = require("../models/student.model");
 const { excludedFields } = require("../utils/excludedFields");
 const { signJwt } = require("../utils/jwt");
 const redisClient = require("../utils/connectRedis");
+const AppError = require("../utils/appError");
 // const { DocumentType } = require("@typegoose/typegoose");
 
 // CreateUser service
 const createUser = async (input) => {
   return studentModel.create(input);
 };
-
 
 // Find User by Id
 const findUserById = async (id) => {
@@ -53,6 +53,25 @@ const signToken = async (user) => {
   return { access_token, refresh_token };
 };
 
+const resetPass = async (userId, oldPassword, newPassword) => {
+  // Find the student by their ID
+  const student = await studentModel.findById(userId);
+
+  // Check if the old password matches the stored password
+  const isMatch = await student.comparePasswords(student.password, oldPassword);
+
+  if (!isMatch) {
+    // Old password does not match
+    throw new AppError("Invalid old password", 401);
+  }
+
+  // Update the password with the new password
+  student.password = newPassword;
+
+  // Save the updated student object
+  await student.save();
+};
+
 module.exports = {
   createUser,
   findUserById,
@@ -60,4 +79,5 @@ module.exports = {
   findUser,
   findAndUpdateUser,
   signToken,
+  resetPass,
 };

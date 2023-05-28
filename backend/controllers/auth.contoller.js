@@ -4,6 +4,7 @@ const {
   findUser,
   findUserById,
   signToken,
+  resetPass,
 } = require("../services/auth.service");
 const AppError = require("../utils/appError");
 const redisClient = require("../utils/connectRedis");
@@ -130,5 +131,17 @@ module.exports.logoutHandler = async (req, res, next) => {
   } catch (err) {
     console.log(err);
     next(err);
+  }
+};
+
+module.exports.resetPasswordHandler = async (req, res, next) => {
+  const { oldPassword, newPassword } = req.body;
+  const userId = res.locals.user._id;
+
+  try {
+    await resetPass(userId, oldPassword, newPassword);
+    res.status(200).json({ message: "Password updated successfully" });
+  } catch (error) {
+    next(error);
   }
 };

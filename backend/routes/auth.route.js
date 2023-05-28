@@ -3,6 +3,7 @@ const {
   loginHandler,
   registerHandler,
   logoutHandler,
+  resetPasswordHandler,
 } = require("../controllers/auth.contoller");
 const { deserializeUser } = require("../middleware/deserializeUser");
 const { requireUser } = require("../middleware/requireUser");
@@ -11,6 +12,8 @@ const {
   createStudentSchema,
   loginStudentSchema,
 } = require("../schema/student.schema");
+
+const { passwordResetSchema } = require("../schema/passwordReset.schema");
 const { restrictTo } = require("../middleware/restrictTo");
 
 const router = express.Router();
@@ -30,6 +33,12 @@ router.post(
   restrictTo("admin"),
   validate(createStudentSchema),
   registerHandler
+);
+
+router.put(
+  "/reset-password",
+  validate(passwordResetSchema),
+  resetPasswordHandler
 );
 
 // Logout User
