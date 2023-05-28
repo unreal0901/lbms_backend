@@ -25,6 +25,7 @@ const allowedOrigins = [config.get("origin"), "http://localhost:3000"];
 app.use(cors({ origin: allowedOrigins, credentials: true }));
 
 //4. logger
+console.log(config.get("deployStage"));
 if (config.get("deployStage") === "development") app.use(morgan("dev"));
 
 // 5. Routes
