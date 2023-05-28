@@ -1,7 +1,6 @@
 const { ZodError } = require("zod");
 
 module.exports.validate = (schema) => (req, res, next) => {
-  console.log(req.body);
   try {
     schema.parse({
       params: req.params,
