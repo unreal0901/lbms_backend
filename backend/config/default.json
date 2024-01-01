@@ -3,5 +3,6 @@
   "accessTokenExpiresIn": 15,
   "refreshTokenExpiresIn": 59,
   "origin": "https://lbms-msi.netlify.app",
-  "emailFrom": "contact@msiforum.com"
+  "emailFrom": "contact@msiforum.com",
+  "deployStage": "production"
 }
