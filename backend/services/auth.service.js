@@ -72,6 +72,13 @@ const resetPass = async (userId, oldPassword, newPassword) => {
   await student.save();
 };
 
+const userExist = async (email) => {
+  const user = await studentModel.find({ email }).lean();
+  console.log(user);
+  if (user.length > 0) return true;
+  else return false;
+};
+
 module.exports = {
   createUser,
   findUserById,
@@ -80,4 +87,5 @@ module.exports = {
   findAndUpdateUser,
   signToken,
   resetPass,
+  userExist,
 };

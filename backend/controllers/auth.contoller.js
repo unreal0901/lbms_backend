@@ -5,6 +5,7 @@ const {
   findUserById,
   signToken,
   resetPass,
+  userExist,
 } = require("../services/auth.service");
 const AppError = require("../utils/appError");
 const redisClient = require("../utils/connectRedis");
@@ -41,6 +42,10 @@ if (config.get("deployStage") === "production") {
 
 module.exports.registerHandler = async (req, res, next) => {
   try {
+    const emailExist = await userExist(req.body.email);
+    if (emailExist) {
+      throw new AppError("Email already Exists");
+    }
     const user = await createUser({
       email: req.body.email,
       fullName: req.body.fullName,
